@@ -4,33 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio Abuelo - Emisora en Vivo</title>
-    <!-- Tailwind CSS for modern responsive utility styling -->
+    <!-- Tailwind CSS for robust modern responsive styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts for high legibility -->
+    <!-- Google Fonts for large, legible typography -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Outfit', sans-serif;
             touch-action: manipulation;
         }
-        /* Custom pulse animation for the giant play button */
+        /* Pulse animation for active playback state */
         @keyframes custom-pulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
-            50% { transform: scale(1.03); box-shadow: 0 0 0 30px rgba(34, 197, 94, 0); }
+            50% { transform: scale(1.03); box-shadow: 0 0 0 35px rgba(34, 197, 94, 0); }
         }
         .pulse-active {
             animation: custom-pulse 2s infinite;
         }
         /* Equalizer bars animation */
         @keyframes sound {
-            0% { height: 10px; }
-            50% { height: 45px; }
-            100% { height: 10px; }
+            0% { height: 12px; }
+            50% { height: 50px; }
+            100% { height: 12px; }
         }
         .bar {
-            width: 10px;
+            width: 12px;
             background-color: #22c55e;
-            margin: 0 4px;
+            margin: 0 5px;
             border-radius: 9999px;
             display: inline-block;
         }
@@ -45,57 +45,77 @@
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex flex-col justify-between select-none">
 
-    <header class="w-full py-6 px-4 text-center bg-slate-800/80 shadow-md border-b border-slate-700">
-        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-wide text-amber-400">RADIO EN VIVO</h1>
-        <p class="text-slate-300 text-lg sm:text-xl mt-1 font-medium">Fácil y Rápido para Usted</p>
+    <header class="w-full py-6 px-4 text-center bg-slate-800/90 shadow-lg border-b border-slate-700">
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-wide text-amber-400">RADIO EN VIVO</h1>
+        <p class="text-slate-300 text-xl sm:text-2xl mt-1 font-medium">Fácil y Rápido para Usted</p>
     </header>
 
     <main class="flex-1 flex flex-col items-center justify-center p-6 max-w-xl mx-auto w-full text-center">
         
-        <!-- Status Indicator / Equalizer -->
-        <div id="status-container" class="mb-8 flex flex-col items-center">
-            <div id="equalizer" class="flex items-end h-12 mb-3">
+        <!-- Equalizer & Status Indicator -->
+        <div id="status-container" class="mb-10 flex flex-col items-center">
+            <div id="equalizer" class="flex items-end h-16 mb-4">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
             </div>
-            <p id="status-text" class="text-2xl sm:text-3xl font-bold text-slate-300">Conectando la radio...</p>
+            <p id="status-text" class="text-2xl sm:text-3xl font-bold text-slate-300">Conectando la emisora...</p>
         </div>
 
-        <!-- Hidden Audio Element -->
-        <audio id="radio-stream" preload="none">
+        <!-- Audio Element with preload auto for instant playback and background support -->
+        <audio id="radio-stream" preload="auto" crossorigin="anonymous">
             <source src="https://stream-284.surfernetwork.com/b10wvksv7mruv?zt=eyJhbGciOiJIUzI1NiJ9.eyJzdHJlYW0iOiJiMTB3dmtzdjdtcnV2IiwiaG9zdCI6InN0cmVhbS0yODQuc3VyZmVybmV0d29yay5jb20iLCJydHRsIjo1LCJqdGkiOiI3SDhUdEdhNVNjSzNrV3BHZFVPTFpRIiwiaWF0IjoxNzkwMzM3NTMzLCJleHAiOjE3OTAzMzc1OTN9.sz3jOxKHPuGJbF_dsNZ8P8JLsW7Lj6bRM-aaqCc8pKI" type="audio/mpeg">
             Su navegador no soporta la reproducción de audio.
         </audio>
 
         <!-- Giant Central Power Button -->
-        <button id="power-btn" onclick="toggleRadio()" class="w-64 h-64 sm:w-80 sm:h-80 rounded-full flex flex-col items-center justify-center font-extrabold text-white shadow-2xl transition-all duration-300 transform active:scale-95 border-8 border-slate-700 bg-red-600 hover:bg-red-500">
+        <button id="power-btn" onclick="toggleRadio()" class="w-64 h-64 sm:w-80 sm:h-80 rounded-full flex flex-col items-center justify-center font-extrabold text-white shadow-2xl transition-all duration-300 transform active:scale-95 border-8 border-slate-700 bg-red-600 hover:bg-red-500 focus:outline-none">
             <svg id="btn-icon" xmlns="http://www.w3.org/2000/svg" class="w-24 h-24 sm:w-28 sm:h-28 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
             </svg>
             <span id="btn-label" class="text-2xl sm:text-3xl tracking-wide uppercase drop-shadow-md">APAGADO</span>
         </button>
 
-        <p class="text-slate-400 text-base sm:text-lg mt-8 font-medium">Toque el botón grande para encender o apagar la música en cualquier momento.</p>
+        <p class="text-slate-400 text-lg sm:text-xl mt-8 font-medium">Toque el botón grande para encender o apagar la radio.</p>
     </main>
 
     <footer class="py-4 text-center text-slate-500 text-sm border-t border-slate-800">
-        Diseñado con cariño para adultos mayores &bull; Audio en directo
+        Diseñado con cariño para adultos mayores &bull; Audio optimizado para segundo plano
     </footer>
 
     <script>
         const audio = document.getElementById('radio-stream');
         const powerBtn = document.getElementById('power-btn');
         const btnLabel = document.getElementById('btn-label');
-        const btnIcon = document.getElementById('btn-icon');
         const statusText = document.getElementById('status-text');
         const equalizer = document.getElementById('equalizer');
 
         let isPlaying = false;
 
-        // Function to update visual states
+        // Configure Media Session API for background playback and lock screen controls
+        function setupMediaSession() {
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: 'Radio en Vivo',
+                    artist: 'Emisora Principal',
+                    album: 'Transmisión Continua',
+                    artwork: [
+                        { src: 'https://placehold.co/512x512/1e293b/fbbf24?text=RADIO', sizes: '512x512', type: 'image/png' }
+                    ]
+                });
+
+                navigator.mediaSession.setActionHandler('play', function() {
+                    startRadio();
+                });
+                navigator.mediaSession.setActionHandler('pause', function() {
+                    stopRadio(true); // User explicit pause
+                });
+            }
+        }
+
+        // Update UI states
         function setRadioState(playing) {
             isPlaying = playing;
             if (playing) {
@@ -106,6 +126,9 @@
                 statusText.classList.remove('text-slate-300', 'text-red-400');
                 statusText.classList.add('text-green-400');
                 equalizer.classList.add('playing');
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.playbackState = "playing";
+                }
             } else {
                 powerBtn.classList.remove('bg-green-600', 'hover:bg-green-500', 'pulse-active');
                 powerBtn.classList.add('bg-red-600', 'hover:bg-red-500');
@@ -114,13 +137,15 @@
                 statusText.classList.remove('text-green-400', 'text-red-400');
                 statusText.classList.add('text-slate-300');
                 equalizer.classList.remove('playing');
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.playbackState = "paused";
+                }
             }
         }
 
-        // Toggle radio play/pause on giant button click
         function toggleRadio() {
             if (isPlaying) {
-                stopRadio();
+                stopRadio(true);
             } else {
                 startRadio();
             }
@@ -131,40 +156,45 @@
             audio.play().then(() => {
                 setRadioState(true);
             }).catch(error => {
-                console.warn("Autoplay bloqueado o error de red:", error);
-                statusText.innerText = "Toque el botón para iniciar";
+                console.warn("Bloqueo de Autoplay:", error);
+                statusText.innerText = "Toque el botón verde para iniciar";
                 setRadioState(false);
             });
         }
 
-        function stopRadio() {
+        // userInitiated parameter distinguishes between closing the page vs background switching (visibility change)
+        function stopRadio(userInitiated = false) {
             audio.pause();
-            audio.currentTime = 0; // Reset stream buffer
+            if (userInitiated) {
+                audio.currentTime = 0; // Clear buffer only on deliberate user shut down
+            }
             setRadioState(false);
         }
 
-        // Automatic start on page load attempt
+        // Automatic playback on page load
         window.addEventListener('load', () => {
-            // Attempt autoplay immediately
+            setupMediaSession();
+            // Attempt autoplay
             audio.play().then(() => {
                 setRadioState(true);
             }).catch(() => {
-                // Browsers often block autoplay without user interaction
+                // If browser blocks autoplay, prompt user via giant button
                 setRadioState(false);
-                statusText.innerText = "Toque el botón rojo para iniciar";
+                statusText.innerText = "Toque el botón grande para escuchar";
             });
         });
 
-        // Automatic stop when leaving the page or changing tabs
+        // Requirement: Stop audio automatically when completely closing or exiting the page
         window.addEventListener('beforeunload', () => {
-            stopRadio();
+            audio.pause();
         });
 
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                stopRadio();
-            }
+        window.addEventListener('pagehide', () => {
+            audio.pause();
         });
+
+        // NOTE: We intentionally DO NOT stop playback on visibilitychange (when the phone screen locks or user goes to home screen), 
+        // because the user specifically requested that the audio continue playing in the background when the screen is turned off.
     </script>
 </body>
 </html>
